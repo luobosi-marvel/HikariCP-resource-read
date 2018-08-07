@@ -103,7 +103,7 @@ public class HikariConfig implements HikariConfigMXBean {
    private String jdbcUrl;
    /** 线程池名 */
    private String poolName;
-   /**  */
+   /** 此属性设置支持模式概念的数据库的默认模式。 如果未指定此属性，则使用JDBC驱动程序定义的默认架构。 默认值：驱动程序默认 */
    private String schema;
    /** 事务隔离名称 */
    private String transactionIsolationName;

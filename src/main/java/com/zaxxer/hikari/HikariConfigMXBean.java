@@ -19,6 +19,7 @@ package com.zaxxer.hikari;
 /**
  * The javax.management MBean for a Hikari pool configuration.
  *
+ * 可以想想为什么要定义成接口然后去修改 HikariConfig 里面的值
  * @author Brett Wooldridge
  */
 public interface HikariConfigMXBean {
