@@ -37,36 +37,33 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * @author brettw
- *
  */
-public class BasicPoolTest
-{
+public class BasicPoolTest {
    @Before
-   public void setup() throws SQLException
-   {
-       HikariConfig config = newHikariConfig();
-       config.setMinimumIdle(1);
-       config.setMaximumPoolSize(2);
-       config.setConnectionTestQuery("SELECT 1");
-       config.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
-       config.addDataSourceProperty("url", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
+   public void setup() throws SQLException {
+      HikariConfig config = newHikariConfig();
+      config.setMinimumIdle(1);
+      config.setMaximumPoolSize(2);
+      config.setConnectionTestQuery("SELECT 1");
+      config.setDataSourceClassName("org.h2.jdbcx.JdbcDataSource");
+      config.addDataSourceProperty("url", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1");
 
-       try (HikariDataSource ds = new HikariDataSource(config);
-            Connection conn = ds.getConnection();
-            Statement stmt = conn.createStatement()) {
-          stmt.executeUpdate("DROP TABLE IF EXISTS basic_pool_test");
-          stmt.executeUpdate("CREATE TABLE basic_pool_test ("
-                            + "id INTEGER NOT NULL IDENTITY PRIMARY KEY, "
-                            + "timestamp TIMESTAMP, "
-                            + "string VARCHAR(128), "
-                            + "string_from_number NUMERIC "
-                            + ")");
-       }
+      try (HikariDataSource ds = new HikariDataSource(config);
+
+           Connection conn = ds.getConnection();
+           Statement stmt = conn.createStatement()) {
+         stmt.executeUpdate("DROP TABLE IF EXISTS basic_pool_test");
+         stmt.executeUpdate("CREATE TABLE basic_pool_test ("
+            + "id INTEGER NOT NULL IDENTITY PRIMARY KEY, "
+            + "timestamp TIMESTAMP, "
+            + "string VARCHAR(128), "
+            + "string_from_number NUMERIC "
+            + ")");
+      }
    }
 
    @Test
-   public void testIdleTimeout() throws InterruptedException, SQLException
-   {
+   public void testIdleTimeout() throws InterruptedException, SQLException {
       HikariConfig config = newHikariConfig();
       config.setMinimumIdle(5);
       config.setMaximumPoolSize(10);
@@ -107,8 +104,7 @@ public class BasicPoolTest
    }
 
    @Test
-   public void testIdleTimeout2() throws InterruptedException, SQLException
-   {
+   public void testIdleTimeout2() throws InterruptedException, SQLException {
       HikariConfig config = newHikariConfig();
       config.setMaximumPoolSize(50);
       config.setConnectionTestQuery("SELECT 1");
@@ -146,4 +142,5 @@ public class BasicPoolTest
          assertEquals("Third idle connections not as expected", 50, pool.getIdleConnections());
       }
    }
+
 }
